@@ -32,7 +32,7 @@ public:
 	
 	
 	void draw() {
-		if(isMouseDown()) ofSetHexColor(DOWN_COLOR);
+		if(isMousePressed()) ofSetHexColor(DOWN_COLOR);
 		else if(isMouseOver()) ofSetHexColor(OVER_COLOR);
 		else ofSetHexColor(IDLE_COLOR);
 		

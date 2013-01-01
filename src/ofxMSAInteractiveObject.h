@@ -23,23 +23,25 @@ public:
 	void enableAppEvents();				// call this if object should update/draw automatically	(default)
 	void disableAppEvents();			// call this if object doesn't need to update/draw automatically
 
-//	void setPos(float _x, float _y);	// set position of object
-//	void setSize(float _w, float _h);	// set size of object
-//
-//	void setPosAndSize(float _x, float _y, float _w, float _h);		// set pos and size
+    
+//	void setPos(float _x, float _y);	// replaced with ofRectangle::setPosition
+	void setSize(float _w, float _h);	// set size of object
+//	void setPosAndSize(float _x, float _y, float _w, float _h);		// replaced with ofRectangle::set
 
-	bool isMouseOver();					// returns true if mouse is over object (based on position and size)
-	bool isMouseDown();					// returns true if mouse button is down and over object (based on position and size)
-	int	 getMouseX();					// returns mouse X (in screen coordinates)
-	int  getMouseY();					// returns mouse Y (in screen coordinates)
-	int  getLastMouseButton();			// returns last mouse button to have activity
+    
+	bool isMouseOver();                     // returns true if mouse is over object (based on position and size)
+	bool isMousePressed(int mouseButton=0);    // returns true if mouse button is down and was pressed over object (based on position and size)
+    
+    
+	int	 getMouseX();                       // returns mouse X (in screen coordinates)
+	int  getMouseY();                       // returns mouse Y (in screen coordinates)
+//	int  getLastMouseButton();              // returns last mouse button to have activity
     
     unsigned long getStateChangeMillis();   // returns milliseconds since last state change
 
 	virtual bool hitTest(int tx, int ty);		// returns true if given (x, y) coordinates (in screen space) are over the object (based on position and size)
 
 //	void killMe();						// if your object is a pointer, and you are done with it, call this
-
 
 	// extend ofxMSAInteractiveObject and override all or any of the following methods
 	virtual void setup()	{}	// called when app starts
@@ -85,12 +87,12 @@ public:
 	void _keyPressed(ofKeyEventArgs &e);
 	void _keyReleased(ofKeyEventArgs &e);
 
-
-protected:
-	int			_mouseX, _mouseY, _mouseButton;
-	bool		_mouseOver;
-	bool		_mouseDown;
-    unsigned long _stateChangeTimestampMillis;
+private:
+//	int             _mouseX, _mouseY;   // mouse coordinates
+//  int             _mouseButton;       // last mouse button to see action;
+	bool            _isMouseOver;       // is mouse over the rect
+	vector<bool>    _isMousePressed;       // is mouse down over the rect (for any given mouse button)
+    unsigned long   _stateChangeTimestampMillis;
 	ofRectangle	oldRect;
 };
 

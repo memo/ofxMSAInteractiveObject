@@ -12,6 +12,7 @@ public:
 	
 	MyTestObject obj;
 	void setup();
+    void draw();
 };
 
 #endif

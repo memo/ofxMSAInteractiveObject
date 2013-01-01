@@ -3,8 +3,7 @@
 
 //--------------------------------------------------------------
 ofxMSAInteractiveObject::ofxMSAInteractiveObject() {
-	_mouseOver	= false;
-	_mouseDown	= false;
+	_isMouseOver	= false;
 	enabled		= true;
 	verbose		= false;
     _stateChangeTimestampMillis = 0;
@@ -84,19 +83,19 @@ void ofxMSAInteractiveObject::disableAppEvents() {
 }
 
 
-////--------------------------------------------------------------
+//--------------------------------------------------------------
 //void ofxMSAInteractiveObject::setPos(float _x, float _y) {
 //	x = _x;
 //	y = _y;
 //}
-//
-////--------------------------------------------------------------
-//void ofxMSAInteractiveObject::setSize(float _w, float _h) {
-//	width = _w;
-//	height = _h;
-//}
-//
-////--------------------------------------------------------------
+
+//--------------------------------------------------------------
+void ofxMSAInteractiveObject::setSize(float _w, float _h) {
+	width = _w;
+	height = _h;
+}
+
+//--------------------------------------------------------------
 //void ofxMSAInteractiveObject::setPosAndSize(float _x, float _y, float _w, float _h) {
 //	setPos(_x, _y);
 //	setSize(_w, _h);
@@ -104,28 +103,32 @@ void ofxMSAInteractiveObject::disableAppEvents() {
 
 //--------------------------------------------------------------
 bool ofxMSAInteractiveObject::isMouseOver() {
-	return _mouseOver;
+	return _isMouseOver;
 }
 
 //--------------------------------------------------------------
-bool ofxMSAInteractiveObject::isMouseDown() {
-	return _mouseDown;
+bool ofxMSAInteractiveObject::isMousePressed(int mouseButton) {
+    if(mouseButton >= _isMousePressed.size()) _isMousePressed.resize(mouseButton+1);
+	return _isMousePressed[mouseButton];
 }
+
 
 //--------------------------------------------------------------
 int ofxMSAInteractiveObject::getMouseX() {
-	return _mouseX;
+//	return _mouseX;
+    return ofGetMouseX();
 }
 
 //--------------------------------------------------------------
 int ofxMSAInteractiveObject::getMouseY() {
-	return _mouseY;
+//	return _mouseY;
+    return ofGetMouseY();
 }
 
 //--------------------------------------------------------------
-int ofxMSAInteractiveObject::getLastMouseButton() {
-	return _mouseButton;
-}
+//int ofxMSAInteractiveObject::getLastMouseButton() {
+//	return _mouseButton;
+//}
 
 //--------------------------------------------------------------
 unsigned long ofxMSAInteractiveObject::getStateChangeMillis() {
@@ -150,16 +153,16 @@ void ofxMSAInteractiveObject::_update(ofEventArgs &e) {
 	if(!enabled) return;
 	
 	// check to see if object has moved, and if so update mouse events
-	if(oldRect.x != this->x || oldRect.y != this->y || oldRect.width != this->width ||oldRect.height != this->height) {
-		ofMouseEventArgs e;
-		e.button = _mouseButton;
-		e.x = _mouseX;
-		e.y = _mouseY;
-		if(_mouseDown) _mouseDragged(e);	
-		else _mouseMoved(e);
-		
-		oldRect =  (ofRectangle) (*this);
-	}
+//	if(oldRect.x != this->x || oldRect.y != this->y || oldRect.width != this->width ||oldRect.height != this->height) {
+//		ofMouseEventArgs e;
+//		e.button = _mouseButton;
+//		e.x = _mouseX;
+//		e.y = _mouseY;
+//		if(_isMousePressed) _mouseDragged(e);
+//		else _mouseMoved(e);
+//		
+//		oldRect =  (ofRectangle) (*this);
+//	}
 	update();
 }
 
@@ -184,18 +187,18 @@ void ofxMSAInteractiveObject::_mouseMoved(ofMouseEventArgs &e) {
 	if(verbose) printf("ofxMSAInteractiveObject::_mouseMoved(x: %i, y: %i)\n", x, y);
 	if(!enabled) return;
 	
-	_mouseX = x;
-	_mouseY = y;
+//	_mouseX = x;
+//	_mouseY = y;
 	
 	if(hitTest(x, y)) {						// if mouse is over the object
-		if(!_mouseOver) {						// if wasn't over previous frame
+		if(!_isMouseOver) {						// if wasn't over previous frame
 			onRollOver(x, y);						// call onRollOver
-			_mouseOver = true;						// update flag
+			_isMouseOver = true;						// update flag
 		}
 		onMouseMove(x, y);						// and trigger onMouseMove
-	} else if(_mouseOver) {					// if mouse is not over the object, but the flag is true (From previous frame)
+	} else if(_isMouseOver) {					// if mouse is not over the object, but the flag is true (From previous frame)
 		onRollOut();							// call onRollOut
-		_mouseOver = false;						// update flag
+		_isMouseOver = false;						// update flag
 	}
     
     _stateChangeTimestampMillis = ofGetElapsedTimeMillis();
@@ -213,14 +216,14 @@ void ofxMSAInteractiveObject::_mousePressed(ofMouseEventArgs &e) {
 	if(verbose) printf("ofxMSAInteractiveObject::_mousePressed(x: %i, y: %i, button: %i)\n", x, y, button);
 	if(!enabled) return;
 
-	_mouseX = x;
-	_mouseY = y;
-	_mouseButton = button;
+//	_mouseX = x;
+//	_mouseY = y;
+//	_mouseButton = button;
 	
 	if(hitTest(x, y)) {						// if mouse is over
-		if(!_mouseDown) {						 // if wasn't down previous frame
+		if(!isMousePressed(button)) {						 // if wasn't down previous frame
 			onPress(x, y, button);					// call onPress
-			_mouseDown = true;						// update flag
+			_isMousePressed[button] = true;						// update flag
 		}
 	} else {								// if mouse is not over
 		onPressOutside(x, y, button);
@@ -240,22 +243,22 @@ void ofxMSAInteractiveObject::_mouseDragged(ofMouseEventArgs &e) {
 	if(verbose) printf("ofxMSAInteractiveObject::_mouseDragged(x: %i, y: %i, button: %i)\n", x, y, button);
 	if(!enabled) return;
 
-	_mouseX = x;
-	_mouseY = y;
-	_mouseButton = button;
+//	_mouseX = x;
+//	_mouseY = y;
+//	_mouseButton = button;
 
 	if(hitTest(x, y)) {						// if mouse is over the object
-		if(!_mouseOver) {						// if wasn't over previous frame
+		if(!_isMouseOver) {						// if wasn't over previous frame
 			//				onPress(x, y);							// call onPress - maybe not
-			_mouseOver = true;						// update flag
+			_isMouseOver = true;						// update flag
 		}
 		onDragOver(x, y, button);				// and trigger onDragOver
 	} else {
-		if(_mouseOver) {					// if mouse is not over the object, but the flag is true (From previous frame)
+		if(_isMouseOver) {					// if mouse is not over the object, but the flag is true (From previous frame)
 			onRollOut();							// call onRollOut
-			_mouseOver = false;						// update flag
+			_isMouseOver = false;						// update flag
 		}
-		if(_mouseDown) {
+		if(isMousePressed(button)) {
 			onDragOutside(x, y, button);
 		}
 	}
@@ -274,16 +277,16 @@ void ofxMSAInteractiveObject::_mouseReleased(ofMouseEventArgs &e) {
 	if(verbose) printf("ofxMSAInteractiveObject::_mouseReleased(x: %i, y: %i, button: %i)\n", x, y, button);
 	if(!enabled) return;
 
-	_mouseX = x;
-	_mouseY = y;
-	_mouseButton = button;
+//	_mouseX = x;
+//	_mouseY = y;
+//	_mouseButton = button;
 	
 	if(hitTest(x, y)) {
 		onRelease(x, y, button);
 	} else {
-		if(_mouseDown) onReleaseOutside(x, y, button);
+		if(isMousePressed(button)) onReleaseOutside(x, y, button);
 	}
-	_mouseDown = false;
+	_isMousePressed[button] = false;
 
     _stateChangeTimestampMillis = ofGetElapsedTimeMillis();
     
