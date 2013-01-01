@@ -7,6 +7,7 @@ ofxMSAInteractiveObject::ofxMSAInteractiveObject() {
 	_mouseDown	= false;
 	enabled		= true;
 	verbose		= false;
+    _stateChangeTimestampMillis = 0;
 	
 	enableAppEvents();
 	disableMouseEvents();
@@ -19,9 +20,9 @@ ofxMSAInteractiveObject::~ofxMSAInteractiveObject() {
 }
 
 //--------------------------------------------------------------
-void ofxMSAInteractiveObject::killMe() {
-	delete this;
-}
+//void ofxMSAInteractiveObject::killMe() {
+//	delete this;
+//}
 
 //--------------------------------------------------------------
 void ofxMSAInteractiveObject::enableAllEvents() {
@@ -83,23 +84,23 @@ void ofxMSAInteractiveObject::disableAppEvents() {
 }
 
 
-//--------------------------------------------------------------
-void ofxMSAInteractiveObject::setPos(float _x, float _y) {
-	x = _x;
-	y = _y;
-}
-
-//--------------------------------------------------------------
-void ofxMSAInteractiveObject::setSize(float _w, float _h) {
-	width = _w;
-	height = _h;
-}
-
-//--------------------------------------------------------------
-void ofxMSAInteractiveObject::setPosAndSize(float _x, float _y, float _w, float _h) {
-	setPos(_x, _y);
-	setSize(_w, _h);
-}
+////--------------------------------------------------------------
+//void ofxMSAInteractiveObject::setPos(float _x, float _y) {
+//	x = _x;
+//	y = _y;
+//}
+//
+////--------------------------------------------------------------
+//void ofxMSAInteractiveObject::setSize(float _w, float _h) {
+//	width = _w;
+//	height = _h;
+//}
+//
+////--------------------------------------------------------------
+//void ofxMSAInteractiveObject::setPosAndSize(float _x, float _y, float _w, float _h) {
+//	setPos(_x, _y);
+//	setSize(_w, _h);
+//}
 
 //--------------------------------------------------------------
 bool ofxMSAInteractiveObject::isMouseOver() {
@@ -124,6 +125,11 @@ int ofxMSAInteractiveObject::getMouseY() {
 //--------------------------------------------------------------
 int ofxMSAInteractiveObject::getLastMouseButton() {
 	return _mouseButton;
+}
+
+//--------------------------------------------------------------
+unsigned long ofxMSAInteractiveObject::getStateChangeMillis() {
+    return ofGetElapsedTimeMillis() - _stateChangeTimestampMillis;
 }
 
 //--------------------------------------------------------------
@@ -191,6 +197,10 @@ void ofxMSAInteractiveObject::_mouseMoved(ofMouseEventArgs &e) {
 		onRollOut();							// call onRollOut
 		_mouseOver = false;						// update flag
 	}
+    
+    _stateChangeTimestampMillis = ofGetElapsedTimeMillis();
+
+    mouseMoved(e);
 }
 
 
@@ -215,6 +225,10 @@ void ofxMSAInteractiveObject::_mousePressed(ofMouseEventArgs &e) {
 	} else {								// if mouse is not over
 		onPressOutside(x, y, button);
 	}
+    
+    _stateChangeTimestampMillis = ofGetElapsedTimeMillis();
+
+    mousePressed(e);
 }
 
 //--------------------------------------------------------------
@@ -245,6 +259,10 @@ void ofxMSAInteractiveObject::_mouseDragged(ofMouseEventArgs &e) {
 			onDragOutside(x, y, button);
 		}
 	}
+    
+    _stateChangeTimestampMillis = ofGetElapsedTimeMillis();
+
+    mouseDragged(e);
 }
 
 //--------------------------------------------------------------
@@ -266,6 +284,10 @@ void ofxMSAInteractiveObject::_mouseReleased(ofMouseEventArgs &e) {
 		if(_mouseDown) onReleaseOutside(x, y, button);
 	}
 	_mouseDown = false;
+
+    _stateChangeTimestampMillis = ofGetElapsedTimeMillis();
+    
+    mouseReleased(e);
 }
 
 
@@ -274,7 +296,8 @@ void ofxMSAInteractiveObject::_keyPressed(ofKeyEventArgs &e) {
 	int key = e.key;
 	if(verbose) printf("ofxMSAInteractiveObject::_keyPressed(key: %i)\n", key);
 	if(!enabled) return;
-	keyPressed(key);
+	onKeyPress(key);
+    keyPressed(e);
 }
 
 
@@ -283,5 +306,6 @@ void ofxMSAInteractiveObject::_keyReleased(ofKeyEventArgs &e) {
 	int key = e.key;	
 	if(verbose) printf("ofxMSAInteractiveObject::_keyReleased(key: %i)\n", key);
 	if(!enabled) return;
-	keyReleased(key);
+	onKeyRelease(key);
+    keyReleased(e);
 }

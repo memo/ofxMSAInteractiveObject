@@ -23,20 +23,22 @@ public:
 	void enableAppEvents();				// call this if object should update/draw automatically	(default)
 	void disableAppEvents();			// call this if object doesn't need to update/draw automatically
 
-	void setPos(float _x, float _y);	// set position of object
-	void setSize(float _w, float _h);	// set size of object
-
-	void setPosAndSize(float _x, float _y, float _w, float _h);		// set pos and size
+//	void setPos(float _x, float _y);	// set position of object
+//	void setSize(float _w, float _h);	// set size of object
+//
+//	void setPosAndSize(float _x, float _y, float _w, float _h);		// set pos and size
 
 	bool isMouseOver();					// returns true if mouse is over object (based on position and size)
 	bool isMouseDown();					// returns true if mouse button is down and over object (based on position and size)
 	int	 getMouseX();					// returns mouse X (in screen coordinates)
 	int  getMouseY();					// returns mouse Y (in screen coordinates)
 	int  getLastMouseButton();			// returns last mouse button to have activity
+    
+    unsigned long getStateChangeMillis();   // returns milliseconds since last state change
 
 	virtual bool hitTest(int tx, int ty);		// returns true if given (x, y) coordinates (in screen space) are over the object (based on position and size)
 
-	void killMe();						// if your object is a pointer, and you are done with it, call this
+//	void killMe();						// if your object is a pointer, and you are done with it, call this
 
 
 	// extend ofxMSAInteractiveObject and override all or any of the following methods
@@ -56,8 +58,16 @@ public:
 	virtual void onRelease(int x, int y, int button)		{}		// called when mouse releases while over object
 	virtual void onReleaseOutside(int x, int y, int button)	{}		// called when mouse releases outside of object after being pressed on object
 
-	virtual void keyPressed( int key ){}
-	virtual void keyReleased( int key ){}
+	virtual void onKeyPress(int key) {}
+	virtual void onKeyRelease(int key) {}
+    
+    virtual void mouseMoved(ofMouseEventArgs &e) {}                 // called when mouse moves anywhere
+	virtual void mousePressed(ofMouseEventArgs &e) {}               // called when mouse pressed anywhere
+	virtual void mouseDragged(ofMouseEventArgs &e) {}               // called when mouse dragged anywhere
+	virtual void mouseReleased(ofMouseEventArgs &e) {}              // called when mouse released anywhere
+    
+	virtual void keyPressed(ofKeyEventArgs &e) {}                   // called when keypressed anywhere
+	virtual void keyReleased(ofKeyEventArgs &e) {}                  // called when keyreleased anywhere
 
 
 	// you shouldn't need access to any of these unless you know what you are doing
@@ -80,6 +90,7 @@ protected:
 	int			_mouseX, _mouseY, _mouseButton;
 	bool		_mouseOver;
 	bool		_mouseDown;
+    unsigned long _stateChangeTimestampMillis;
 	ofRectangle	oldRect;
 };
 
