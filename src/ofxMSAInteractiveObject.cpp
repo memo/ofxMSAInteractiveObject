@@ -192,8 +192,8 @@ void ofxMSAInteractiveObject::_mouseMoved(ofMouseEventArgs &e) {
 	
 	if(hitTest(x, y)) {						// if mouse is over the object
 		if(!_isMouseOver) {						// if wasn't over previous frame
-			onRollOver(x, y);						// call onRollOver
 			_isMouseOver = true;						// update flag
+			onRollOver(x, y);						// call onRollOver
 		}
 		onMouseMove(x, y);						// and trigger onMouseMove
 	} else if(_isMouseOver) {					// if mouse is not over the object, but the flag is true (From previous frame)
@@ -222,8 +222,8 @@ void ofxMSAInteractiveObject::_mousePressed(ofMouseEventArgs &e) {
 	
 	if(hitTest(x, y)) {						// if mouse is over
 		if(!isMousePressed(button)) {						 // if wasn't down previous frame
-			onPress(x, y, button);					// call onPress
 			_isMousePressed[button] = true;						// update flag
+			onPress(x, y, button);					// call onPress
 		}
 	} else {								// if mouse is not over
 		onPressOutside(x, y, button);
