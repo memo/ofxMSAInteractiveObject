@@ -251,6 +251,7 @@ void ofxMSAInteractiveObject::_mouseDragged(ofMouseEventArgs &e) {
 		if(!_isMouseOver) {						// if wasn't over previous frame
 			//				onPress(x, y);							// call onPress - maybe not
 			_isMouseOver = true;						// update flag
+			onRollOver(x, y);						// call onRollOver
 		}
 		onDragOver(x, y, button);				// and trigger onDragOver
 	} else {
