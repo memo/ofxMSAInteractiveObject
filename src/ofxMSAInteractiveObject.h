@@ -59,17 +59,19 @@ public:
 	virtual void onPressOutside(int x, int y, int button)	{}		// called when mouse presses while outside object
 	virtual void onRelease(int x, int y, int button)		{}		// called when mouse releases while over object
 	virtual void onReleaseOutside(int x, int y, int button)	{}		// called when mouse releases outside of object after being pressed on object
-
-	virtual void onKeyPress(int key) {}
-	virtual void onKeyRelease(int key) {}
+	virtual void onKeyPress(int key) {}                             // called when keypressed while mouse over the object
+	virtual void onKeyRelease(int key) {}                           // called when keyreleased while mouse over the object
     
-    virtual void mouseMoved(ofMouseEventArgs &e) {}                 // called when mouse moves anywhere
-	virtual void mousePressed(ofMouseEventArgs &e) {}               // called when mouse pressed anywhere
-	virtual void mouseDragged(ofMouseEventArgs &e) {}               // called when mouse dragged anywhere
-	virtual void mouseReleased(ofMouseEventArgs &e) {}              // called when mouse released anywhere
     
-	virtual void keyPressed(ofKeyEventArgs &e) {}                   // called when keypressed anywhere
-	virtual void keyReleased(ofKeyEventArgs &e) {}                  // called when keyreleased anywhere
+    // these are called when the relevant event occurs without caring where it actually happened
+    // i.e. its the raw event
+    virtual void mouseMoved(int x, int y) {}                        // called when mouse moves anywhere
+	virtual void mousePressed(int x, int y, int button) {}          // called when mouse pressed anywhere
+	virtual void mouseDragged(int x, int y, int button) {}          // called when mouse dragged anywhere
+	virtual void mouseReleased(int x, int y, int button) {}         // called when mouse released anywhere
+    
+	virtual void keyPressed(int key) {}                             // called when keypressed anywhere
+	virtual void keyReleased(int key) {}                            // called when keyreleased anywhere
 
 
 	// you shouldn't need access to any of these unless you know what you are doing
@@ -88,10 +90,8 @@ public:
 	void _keyReleased(ofKeyEventArgs &e);
 
 private:
-//	int             _mouseX, _mouseY;   // mouse coordinates
-//  int             _mouseButton;       // last mouse button to see action;
 	bool            _isMouseOver;       // is mouse over the rect
-	vector<bool>    _isMousePressed;       // is mouse down over the rect (for any given mouse button)
+	map<int, bool>    _isMousePressed;       // is mouse down over the rect (for any given mouse button)
     unsigned long   _stateChangeTimestampMillis;
 	ofRectangle	oldRect;
 };

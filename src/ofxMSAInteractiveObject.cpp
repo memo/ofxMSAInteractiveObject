@@ -108,7 +108,7 @@ bool ofxMSAInteractiveObject::isMouseOver() {
 
 //--------------------------------------------------------------
 bool ofxMSAInteractiveObject::isMousePressed(int mouseButton) {
-    if(mouseButton >= _isMousePressed.size()) _isMousePressed.resize(mouseButton+1);
+//    if(mouseButton >= _isMousePressed.size()) _isMousePressed.resize(mouseButton+1);
 	return _isMousePressed[mouseButton];
 }
 
@@ -203,7 +203,7 @@ void ofxMSAInteractiveObject::_mouseMoved(ofMouseEventArgs &e) {
     
     _stateChangeTimestampMillis = ofGetElapsedTimeMillis();
 
-    mouseMoved(e);
+    mouseMoved(x, y);
 }
 
 
@@ -231,7 +231,7 @@ void ofxMSAInteractiveObject::_mousePressed(ofMouseEventArgs &e) {
     
     _stateChangeTimestampMillis = ofGetElapsedTimeMillis();
 
-    mousePressed(e);
+    mousePressed(x, y, button);
 }
 
 //--------------------------------------------------------------
@@ -266,7 +266,7 @@ void ofxMSAInteractiveObject::_mouseDragged(ofMouseEventArgs &e) {
     
     _stateChangeTimestampMillis = ofGetElapsedTimeMillis();
 
-    mouseDragged(e);
+    mouseDragged(x, y, button);
 }
 
 //--------------------------------------------------------------
@@ -291,7 +291,7 @@ void ofxMSAInteractiveObject::_mouseReleased(ofMouseEventArgs &e) {
 
     _stateChangeTimestampMillis = ofGetElapsedTimeMillis();
     
-    mouseReleased(e);
+    mouseReleased(x, y, button);
 }
 
 
@@ -300,8 +300,8 @@ void ofxMSAInteractiveObject::_keyPressed(ofKeyEventArgs &e) {
 	int key = e.key;
 	if(verbose) printf("ofxMSAInteractiveObject::_keyPressed(key: %i)\n", key);
 	if(!enabled) return;
-	onKeyPress(key);
-    keyPressed(e);
+    if(isMouseOver()) onKeyPress(key);
+    keyPressed(key);
 }
 
 
@@ -310,6 +310,6 @@ void ofxMSAInteractiveObject::_keyReleased(ofKeyEventArgs &e) {
 	int key = e.key;	
 	if(verbose) printf("ofxMSAInteractiveObject::_keyReleased(key: %i)\n", key);
 	if(!enabled) return;
-	onKeyRelease(key);
-    keyReleased(e);
+	if(isMouseOver()) onKeyRelease(key);
+    keyReleased(key);
 }
