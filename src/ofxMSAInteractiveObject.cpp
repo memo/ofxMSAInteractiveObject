@@ -1,3 +1,15 @@
+//                                      __
+//     ____ ___  ___  ____ ___  ____   / /__   __
+//    / __ `__ \/ _ \/ __ `__ \/ __ \ / __/ | / /
+//   / / / / / /  __/ / / / / / /_/ // /_ | |/ /
+//  /_/ /_/ /_/\___/_/ /_/ /_/\____(_)__/ |___/
+//
+//
+//  Created by Memo Akten, www.memo.tv
+//
+//  ofxMSAControlFreakGui
+//
+
 #include "ofxMSAInteractiveObject.h"
 #include "ofMain.h"
 
@@ -84,7 +96,7 @@ void ofxMSAInteractiveObject::disableAppEvents() {
 
 
 //--------------------------------------------------------------
-//void ofxMSAInteractiveObject::setPos(float _x, float _y) {
+//void ofxMSAInteractiveObject::setPosition(float _x, float _y) {
 //	x = _x;
 //	y = _y;
 //}
@@ -97,7 +109,7 @@ void ofxMSAInteractiveObject::setSize(float _w, float _h) {
 
 //--------------------------------------------------------------
 //void ofxMSAInteractiveObject::setPosAndSize(float _x, float _y, float _w, float _h) {
-//	setPos(_x, _y);
+//	setPosition(_x, _y);
 //	setSize(_w, _h);
 //}
 

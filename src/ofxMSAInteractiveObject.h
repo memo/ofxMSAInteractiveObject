@@ -1,3 +1,15 @@
+//                                      __
+//     ____ ___  ___  ____ ___  ____   / /__   __
+//    / __ `__ \/ _ \/ __ `__ \/ __ \ / __/ | / /
+//   / / / / / /  __/ / / / / / /_/ // /_ | |/ /
+//  /_/ /_/ /_/\___/_/ /_/ /_/\____(_)__/ |___/
+//
+//
+//  Created by Memo Akten, www.memo.tv
+//
+//  ofxMSAControlFreakGui
+//
+
 #pragma once
 
 #include "ofMain.h"
@@ -24,7 +36,7 @@ public:
 	void disableAppEvents();			// call this if object doesn't need to update/draw automatically
 
     
-//	void setPos(float _x, float _y);	// replaced with ofRectangle::setPosition
+//	void setPosition(float _x, float _y);	// replaced with ofRectangle::setPosition
 	void setSize(float _w, float _h);	// set size of object
 //	void setPosAndSize(float _x, float _y, float _w, float _h);		// replaced with ofRectangle::set
 
