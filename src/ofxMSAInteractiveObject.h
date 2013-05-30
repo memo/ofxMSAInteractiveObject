@@ -7,7 +7,6 @@
 //
 //  Created by Memo Akten, www.memo.tv
 //
-//  ofxMSAControlFreakGui
 //
 
 #pragma once
@@ -47,43 +46,40 @@ public:
     
 	int	 getMouseX() const;                       // returns mouse X (in screen coordinates)
 	int  getMouseY() const;                       // returns mouse Y (in screen coordinates)
-//	int  getLastMouseButton();              // returns last mouse button to have activity
     
     unsigned long getStateChangeMillis() const;   // returns milliseconds since last state change
 
 	virtual bool hitTest(int tx, int ty) const;		// returns true if given (x, y) coordinates (in screen space) are over the object (based on position and size)
 
-//	void killMe();						// if your object is a pointer, and you are done with it, call this
-
 	// extend ofxMSAInteractiveObject and override all or any of the following methods
-	virtual void setup()	{}	// called when app starts
-	virtual void update()	{}	// called every frame to update object
-    virtual void draw()		{}	// called every frame to draw object
-	virtual void exit()		{}	// called when app quites
+	virtual void setup() {}     // called when app starts
+	virtual void update() {}	// called every frame to update object
+    virtual void draw() {}      // called every frame to draw object
+	virtual void exit() {}      // called when app quites
 
 	// these behave very similar to those in flash
-	virtual void onRollOver(int x, int y)					{}		// called when mouse enters object x, y, width, height
-	virtual void onRollOut()								{}		// called when mouse leaves object x, y, width, height
-	virtual void onMouseMove(int x, int y)					{}		// called when mouse moves while over object x, y, width, height
-	virtual void onDragOver(int x, int y, int button)		{}		// called when mouse moves while over object and button is down
-	virtual void onDragOutside(int x, int y, int button)	{}		// called when mouse moves while outside the object after being clicked on it
-	virtual void onPress(int x, int y, int button)			{}		// called when mouse presses while over object
-	virtual void onPressOutside(int x, int y, int button)	{}		// called when mouse presses while outside object
-	virtual void onRelease(int x, int y, int button)		{}		// called when mouse releases while over object
-	virtual void onReleaseOutside(int x, int y, int button)	{}		// called when mouse releases outside of object after being pressed on object
-	virtual void onKeyPress(int key) {}                             // called when keypressed while mouse over the object
-	virtual void onKeyRelease(int key) {}                           // called when keyreleased while mouse over the object
+	virtual void onRollOver(int x, int y) {}                    // called when mouse enters object x, y, width, height
+	virtual void onRollOut() {}                                 // called when mouse leaves object x, y, width, height
+	virtual void onMouseMove(int x, int y) {}                   // called when mouse moves while over object x, y, width, height
+	virtual void onDragOver(int x, int y, int button) {}        // called when mouse moves while over object and button is down
+	virtual void onDragOutside(int x, int y, int button) {}     // called when mouse moves while outside the object after being clicked on it
+	virtual void onPress(int x, int y, int button) {}           // called when mouse presses while over object
+	virtual void onPressOutside(int x, int y, int button) {}    // called when mouse presses while outside object
+	virtual void onRelease(int x, int y, int button) {}         // called when mouse releases while over object
+	virtual void onReleaseOutside(int x, int y, int button) {}  // called when mouse releases outside of object after being pressed on object
+	virtual void onKeyPress(int key) {}                         // called when keypressed while mouse over the object
+	virtual void onKeyRelease(int key) {}                        // called when keyreleased while mouse over the object
     
     
     // these are called when the relevant event occurs without caring where it actually happened
     // i.e. its the raw event
-    virtual void mouseMoved(int x, int y) {}                        // called when mouse moves anywhere
-	virtual void mousePressed(int x, int y, int button) {}          // called when mouse pressed anywhere
-	virtual void mouseDragged(int x, int y, int button) {}          // called when mouse dragged anywhere
-	virtual void mouseReleased(int x, int y, int button) {}         // called when mouse released anywhere
+    virtual void mouseMoved(int x, int y) {}                     // called when mouse moves anywhere
+	virtual void mousePressed(int x, int y, int button) {}       // called when mouse pressed anywhere
+	virtual void mouseDragged(int x, int y, int button) {}       // called when mouse dragged anywhere
+	virtual void mouseReleased(int x, int y, int button) {}      // called when mouse released anywhere
     
-	virtual void keyPressed(int key) {}                             // called when keypressed anywhere
-	virtual void keyReleased(int key) {}                            // called when keyreleased anywhere
+	virtual void keyPressed(int key) {}                          // called when keypressed anywhere
+	virtual void keyReleased(int key) {}                         // called when keyreleased anywhere
 
 
 	// you shouldn't need access to any of these unless you know what you are doing

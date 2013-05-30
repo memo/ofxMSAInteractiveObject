@@ -7,7 +7,6 @@
 //
 //  Created by Memo Akten, www.memo.tv
 //
-//  ofxMSAControlFreakGui
 //
 
 #include "ofxMSAInteractiveObject.h"
@@ -29,11 +28,6 @@ ofxMSAInteractiveObject::ofxMSAInteractiveObject() {
 ofxMSAInteractiveObject::~ofxMSAInteractiveObject() {
 	disableAllEvents();
 }
-
-//--------------------------------------------------------------
-//void ofxMSAInteractiveObject::killMe() {
-//	delete this;
-//}
 
 //--------------------------------------------------------------
 void ofxMSAInteractiveObject::enableAllEvents() {
@@ -127,20 +121,13 @@ bool ofxMSAInteractiveObject::isMousePressed(int mouseButton) const {
 
 //--------------------------------------------------------------
 int ofxMSAInteractiveObject::getMouseX() const {
-//	return _mouseX;
     return ofGetMouseX();
 }
 
 //--------------------------------------------------------------
 int ofxMSAInteractiveObject::getMouseY() const {
-//	return _mouseY;
     return ofGetMouseY();
 }
-
-//--------------------------------------------------------------
-//int ofxMSAInteractiveObject::getLastMouseButton() {
-//	return _mouseButton;
-//}
 
 //--------------------------------------------------------------
 unsigned long ofxMSAInteractiveObject::getStateChangeMillis() const {
