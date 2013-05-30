@@ -114,25 +114,25 @@ void ofxMSAInteractiveObject::setSize(float _w, float _h) {
 //}
 
 //--------------------------------------------------------------
-bool ofxMSAInteractiveObject::isMouseOver() {
+bool ofxMSAInteractiveObject::isMouseOver() const {
 	return _isMouseOver;
 }
 
 //--------------------------------------------------------------
-bool ofxMSAInteractiveObject::isMousePressed(int mouseButton) {
-//    if(mouseButton >= _isMousePressed.size()) _isMousePressed.resize(mouseButton+1);
-	return _isMousePressed[mouseButton];
+bool ofxMSAInteractiveObject::isMousePressed(int mouseButton) const {
+    if(_isMousePressed.find(mouseButton) == _isMousePressed.end()) return false;
+    return _isMousePressed.at(mouseButton);
 }
 
 
 //--------------------------------------------------------------
-int ofxMSAInteractiveObject::getMouseX() {
+int ofxMSAInteractiveObject::getMouseX() const {
 //	return _mouseX;
     return ofGetMouseX();
 }
 
 //--------------------------------------------------------------
-int ofxMSAInteractiveObject::getMouseY() {
+int ofxMSAInteractiveObject::getMouseY() const {
 //	return _mouseY;
     return ofGetMouseY();
 }
@@ -143,12 +143,12 @@ int ofxMSAInteractiveObject::getMouseY() {
 //}
 
 //--------------------------------------------------------------
-unsigned long ofxMSAInteractiveObject::getStateChangeMillis() {
+unsigned long ofxMSAInteractiveObject::getStateChangeMillis() const {
     return ofGetElapsedTimeMillis() - _stateChangeTimestampMillis;
 }
 
 //--------------------------------------------------------------
-bool ofxMSAInteractiveObject::hitTest(int tx, int ty) {
+bool ofxMSAInteractiveObject::hitTest(int tx, int ty) const {
 	return ((tx > x) && (tx < x + width) && (ty > y) && (ty < y + height));
 }
 

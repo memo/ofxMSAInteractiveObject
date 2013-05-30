@@ -41,17 +41,17 @@ public:
 //	void setPosAndSize(float _x, float _y, float _w, float _h);		// replaced with ofRectangle::set
 
     
-	bool isMouseOver();                     // returns true if mouse is over object (based on position and size)
-	bool isMousePressed(int mouseButton=0);    // returns true if mouse button is down and was pressed over object (based on position and size)
+	bool isMouseOver() const;                     // returns true if mouse is over object (based on position and size)
+	bool isMousePressed(int mouseButton=0) const;    // returns true if mouse button is down and was pressed over object (based on position and size)
     
     
-	int	 getMouseX();                       // returns mouse X (in screen coordinates)
-	int  getMouseY();                       // returns mouse Y (in screen coordinates)
+	int	 getMouseX() const;                       // returns mouse X (in screen coordinates)
+	int  getMouseY() const;                       // returns mouse Y (in screen coordinates)
 //	int  getLastMouseButton();              // returns last mouse button to have activity
     
-    unsigned long getStateChangeMillis();   // returns milliseconds since last state change
+    unsigned long getStateChangeMillis() const;   // returns milliseconds since last state change
 
-	virtual bool hitTest(int tx, int ty);		// returns true if given (x, y) coordinates (in screen space) are over the object (based on position and size)
+	virtual bool hitTest(int tx, int ty) const;		// returns true if given (x, y) coordinates (in screen space) are over the object (based on position and size)
 
 //	void killMe();						// if your object is a pointer, and you are done with it, call this
 
