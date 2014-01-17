@@ -213,18 +213,18 @@ void ofxMSAInteractiveObject::_mousePressed(ofMouseEventArgs &e) {
 	int button = e.button;
 	
 	if(verbose) printf("ofxMSAInteractiveObject::_mousePressed(x: %i, y: %i, button: %i)\n", x, y, button);
-	if(!enabled) return;
+	if(!enabled) {
+        _isMousePressed[button] = false;
+        return;
+    }
 
-//	_mouseX = x;
-//	_mouseY = y;
-//	_mouseButton = button;
-	
 	if(hitTest(x, y)) {						// if mouse is over
 		if(!isMousePressed(button)) {						 // if wasn't down previous frame
 			_isMousePressed[button] = true;						// update flag
 			onPress(x, y, button);					// call onPress
 		}
 	} else {								// if mouse is not over
+        _isMousePressed[button] = false;	// update flag
 		onPressOutside(x, y, button);
 	}
     
@@ -240,11 +240,10 @@ void ofxMSAInteractiveObject::_mouseDragged(ofMouseEventArgs &e) {
 	int button = e.button;
 	
 	if(verbose) printf("ofxMSAInteractiveObject::_mouseDragged(x: %i, y: %i, button: %i)\n", x, y, button);
-	if(!enabled) return;
-
-//	_mouseX = x;
-//	_mouseY = y;
-//	_mouseButton = button;
+	if(!enabled) {
+        _isMousePressed[button] = false;
+        return;
+    }
 
 	if(hitTest(x, y)) {						// if mouse is over the object
 		if(!_isMouseOver) {						// if wasn't over previous frame
@@ -261,6 +260,7 @@ void ofxMSAInteractiveObject::_mouseDragged(ofMouseEventArgs &e) {
 		if(isMousePressed(button)) {
 			onDragOutside(x, y, button);
 		}
+        _isMousePressed[button] = false;
 	}
     
     _stateChangeTimestampMillis = ofGetElapsedTimeMillis();
@@ -275,11 +275,10 @@ void ofxMSAInteractiveObject::_mouseReleased(ofMouseEventArgs &e) {
 	int button = e.button;
 	
 	if(verbose) printf("ofxMSAInteractiveObject::_mouseReleased(x: %i, y: %i, button: %i)\n", x, y, button);
-	if(!enabled) return;
-
-//	_mouseX = x;
-//	_mouseY = y;
-//	_mouseButton = button;
+	if(!enabled) {
+        _isMousePressed[button] = false;
+        return;
+    }
 	
 	if(hitTest(x, y)) {
 		onRelease(x, y, button);
