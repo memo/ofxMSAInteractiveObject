@@ -171,7 +171,11 @@ void ofxMSAInteractiveObject::_update(ofEventArgs &e) {
 //--------------------------------------------------------------
 void ofxMSAInteractiveObject::_draw(ofEventArgs &e) {
 	if(!enabled) return;
-	draw();
+
+    ofPushStyle();
+        ofSetRectMode(myRectMode);
+        draw();
+    ofPopStyle();
 }
 
 //--------------------------------------------------------------
