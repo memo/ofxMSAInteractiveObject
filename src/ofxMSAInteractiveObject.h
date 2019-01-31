@@ -18,7 +18,6 @@ class ofxMSAInteractiveObject : public ofRectangle {
 public:
 	bool		enabled;				// set this to false to temporarily disable all events
 	bool		verbose;
-    ofRectMode   myRectMode;
 
 	ofxMSAInteractiveObject();			// constructor
 	virtual ~ofxMSAInteractiveObject();	// destructor
