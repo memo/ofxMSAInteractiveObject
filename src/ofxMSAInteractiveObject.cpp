@@ -18,7 +18,6 @@ ofxMSAInteractiveObject::ofxMSAInteractiveObject() {
 	enabled		= true;
 	verbose		= false;
     _stateChangeTimestampMillis = 0;
-    myRectMode = OF_RECTMODE_CENTER;
 	
 	enableAppEvents();
 	disableMouseEvents();
@@ -137,11 +136,9 @@ unsigned long ofxMSAInteractiveObject::getStateChangeMillis() const {
 
 //--------------------------------------------------------------
 bool ofxMSAInteractiveObject::hitTest(int tx, int ty) const {
-    
-    tx += myRectMode * width/2;
-    ty += myRectMode * height/2;
 	return ((tx > x) && (tx < x + width) && (ty > y) && (ty < y + height));
 }
+
 
 
 //--------------------------------------------------------------
@@ -171,11 +168,7 @@ void ofxMSAInteractiveObject::_update(ofEventArgs &e) {
 //--------------------------------------------------------------
 void ofxMSAInteractiveObject::_draw(ofEventArgs &e) {
 	if(!enabled) return;
-
-    ofPushStyle();
-        ofSetRectMode(myRectMode);
-        draw();
-    ofPopStyle();
+	draw();
 }
 
 //--------------------------------------------------------------
